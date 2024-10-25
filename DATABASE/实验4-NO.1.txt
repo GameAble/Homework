@@ -1,0 +1,32 @@
+使用的是ACCESS，可能与SQL server有所不同，可以根据报错去查询更改语句
+
+1、
+SELECT tEmployee.雇员号, tEmployee.姓名, 2024-Year([出生日期]) AS 年龄
+FROM tEmployee
+WHERE (((tEmployee.[性别])='女'));
+
+2、
+SELECT tOrder.订单号, tEmployee.姓名, tEmployee.职务
+FROM tEmployee INNER JOIN tOrder ON (tEmployee.雇员号 = tOrder.雇员号) AND (tEmployee.雇员号 = tOrder.雇员号)
+WHERE (((Month([tOrder.订购日期])) In (4,5,6)));
+
+3、
+SELECT tOrder.雇员号, tOrder.订单号, tDetail.书籍号 AS 表达式1, tOrder.订购日期
+FROM (tEmployee INNER JOIN tOrder ON tEmployee.雇员号 = tOrder.雇员号) INNER JOIN (tBook INNER JOIN tDetail ON tBook.书籍号 = tDetail.书籍号) ON tOrder.订单号 = tDetail.订单号
+WHERE ((([tEmployee].[职务])='经理'))
+ORDER BY tOrder.雇员号, tOrder.订单号 DESC;
+
+4、
+SELECT tDetail.订单明细号 AS 表达式1, tBook.书籍名称 AS 表达式2, (tDetail.售出单价*tDetail.数量) AS 总价
+FROM tBook INNER JOIN tDetail ON tBook.书籍号 = tDetail.书籍号;
+
+5、
+SELECT TOP 1 客户号, COUNT(订单号) AS 订单数
+FROM tOrder
+GROUP BY 客户号
+ORDER BY 订单数 DESC;
+6、
+SELECT 姓名, 性别, 职务, MONTH(出生日期) AS 月份
+FROM tEmployee
+WHERE LENGTH(姓名) = 2
+ORDER BY MONTH(出生日期) ASC;
